@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Neptuno" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-KK9QJBS;Initial Catalog=Neptuno;Integrated Security=True" SettingsObjectName="Semana08.Properties.Settings" SettingsPropertyName="NeptunoConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Pedidos" Member="Pedidos">
+    <Type Name="Pedidos">
+      <Column Name="IdPedido" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IdCliente" Type="System.String" DbType="VarChar(5) NOT NULL" CanBeNull="false" />
+      <Column Name="IdEmpleado" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="FechaPedido" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="FechaEntrega" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="FechaEnvio" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="FormaEnvio" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Cargo" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Destinatario" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="DireccionDestinatario" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="CiudadDestinatario" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="RegionDestinatario" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="CodPostalDestinatario" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="PaisDestinatario" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Association Name="Pedidos_detallesdepedidos" Member="detallesdepedidos" ThisKey="IdPedido" OtherKey="idpedido" Type="detallesdepedidos" />
+      <Association Name="clientes_Pedidos" Member="clientes" ThisKey="IdCliente" OtherKey="idCliente" Type="clientes" IsForeignKey="true" />
+      <Association Name="compañiasdeenvios_Pedidos" Member="compañiasdeenvios" ThisKey="FormaEnvio" OtherKey="idCompañiaEnvios" Type="compañiasdeenvios" IsForeignKey="true" />
+      <Association Name="Empleados_Pedidos" Member="Empleados" ThisKey="IdEmpleado" OtherKey="IdEmpleado" Type="Empleados" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.clientes" Member="clientes">
+    <Type Name="clientes">
+      <Column Name="idCliente" Type="System.String" DbType="VarChar(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NombreCompañia" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="NombreContacto" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="CargoContacto" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Direccion" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Ciudad" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Region" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="CodPostal" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Pais" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Fax" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Association Name="clientes_Pedidos" Member="Pedidos" ThisKey="idCliente" OtherKey="IdCliente" Type="Pedidos" />
+    </Type>
+  </Table>
+  <Table Name="dbo.detallesdepedidos" Member="detallesdepedidos">
+    <Type Name="detallesdepedidos">
+      <Column Name="idpedido" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idproducto" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="preciounidad" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="cantidad" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="descuento" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Association Name="Pedidos_detallesdepedidos" Member="Pedidos" ThisKey="idpedido" OtherKey="IdPedido" Type="Pedidos" IsForeignKey="true" />
+      <Association Name="productos_detallesdepedidos" Member="productos" ThisKey="idproducto" OtherKey="idproducto" Type="productos" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.productos" Member="productos">
+    <Type Name="productos">
+      <Column Name="idproducto" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombreProducto" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="idProveedor" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idCategoria" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cantidadPorUnidad" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="precioUnidad" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="unidadesEnExistencia" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="unidadesEnPedido" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="nivelNuevoPedido" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="suspendido" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="categoriaProducto" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="productos_detallesdepedidos" Member="detallesdepedidos" ThisKey="idproducto" OtherKey="idproducto" Type="detallesdepedidos" />
+      <Association Name="proveedores_productos" Member="proveedores" ThisKey="idProveedor" OtherKey="idProveedor" Type="proveedores" IsForeignKey="true" />
+      <Association Name="categorias_productos" Member="categorias" ThisKey="idCategoria" OtherKey="idcategoria" Type="categorias" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.proveedores" Member="proveedores">
+    <Type Name="proveedores">
+      <Column Name="idProveedor" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombreCompañia" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="nombrecontacto" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="cargocontacto" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="direccion" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="ciudad" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="region" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="codPostal" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="pais" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="telefono" Type="System.String" DbType="VarChar(24)" CanBeNull="true" />
+      <Column Name="fax" Type="System.String" DbType="VarChar(24)" CanBeNull="true" />
+      <Column Name="paginaprincipal" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="proveedores_productos" Member="productos" ThisKey="idProveedor" OtherKey="idProveedor" Type="productos" />
+    </Type>
+  </Table>
+  <Table Name="dbo.compañiasdeenvios" Member="compañiasdeenvios">
+    <Type Name="compañiasdeenvios">
+      <Column Name="idCompañiaEnvios" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombreCompañia" Type="System.String" DbType="VarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="telefono" Type="System.String" DbType="VarChar(24)" CanBeNull="true" />
+      <Association Name="compañiasdeenvios_Pedidos" Member="Pedidos" ThisKey="idCompañiaEnvios" OtherKey="FormaEnvio" Type="Pedidos" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Empleados" Member="Empleados">
+    <Type Name="Empleados">
+      <Column Name="IdEmpleado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Apellidos" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="cargo" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="Tratamiento" Type="System.String" DbType="VarChar(40)" CanBeNull="true" />
+      <Column Name="FechaNacimiento" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="FechaContratacion" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="direccion" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
+      <Column Name="ciudad" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="region" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="codPostal" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="pais" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="TelDomicilio" Type="System.String" DbType="VarChar(24)" CanBeNull="true" />
+      <Column Name="Extension" Type="System.String" DbType="VarChar(4)" CanBeNull="true" />
+      <Column Name="notas" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Jefe" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sueldoBasico" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Association Name="Empleados_Pedidos" Member="Pedidos" ThisKey="IdEmpleado" OtherKey="IdEmpleado" Type="Pedidos" />
+    </Type>
+  </Table>
+  <Table Name="dbo.categorias" Member="categorias">
+    <Type Name="categorias">
+      <Column Name="idcategoria" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nombrecategoria" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="descripcion" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Activo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CodCategoria" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="categorias_productos" Member="productos" ThisKey="idcategoria" OtherKey="idCategoria" Type="productos" />
+    </Type>
+  </Table>
+</Database>
